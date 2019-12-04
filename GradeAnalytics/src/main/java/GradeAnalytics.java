@@ -3,8 +3,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+
 
 public class GradeAnalytics {
+	
+	
 	
 	public static void main(String[] args) {
 		
@@ -20,6 +24,10 @@ public class GradeAnalytics {
 		for (double i : data) {
 			System.out.println(i);
 		}
+		
+		
+		
+		
 	}
 	
 	private static ArrayList<Double> parseFile(String fileName, int fileType)
@@ -68,4 +76,47 @@ public class GradeAnalytics {
 		return data;
 	}
 	
+	
+	
+	public void addData(ArrayList <Double> data, double newData) {
+
+		data.add(newData);
+		
+	}
+	
+	public void deleteData( ArrayList<Double> data, double deleteData)
+	{
+		data.remove(deleteData);
+	}
+	
+	public int getSize ( ArrayList <Double> data) {
+		
+		return data.size();
+	}
+	
+	public double maxValue ( ArrayList <Double> data) {
+		
+		return Collections.max(data);
+	}
+	
+	public double minValue (ArrayList <Double> data) {
+		
+		return Collections.min(data);
+	}
+	
+	public double getMean ( ArrayList <Double> data)
+	{
+		double total = 0;
+		
+		for ( int i =0; i < data.size(); i++)
+		{
+			total += data.get(i);
+		};
+		
+		return total / data.size();
+	}
+	
+	
 }
+
+
