@@ -22,11 +22,19 @@ public class GradeAnalytics {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param fileName
+	 * @param fileType
+	 * @return ArrayList<Double>
+	 * @throws InvalidFileTypeException
+	 * 
+	 * Parses a .txt or .csv file for decimal values and returns them as an
+	 * ArrayList. Does not support any other file types.
+	 */
 	private static ArrayList<Double> parseFile(String fileName, int fileType)
 	throws InvalidFileTypeException {
-		//.txt file is a fileType of 0
-		//.csv file is a fileType of 1
-		//No other file types are supported
+		
 		BufferedReader br = null;
 		String line = "";
 		
