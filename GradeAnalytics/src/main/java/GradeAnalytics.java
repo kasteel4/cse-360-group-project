@@ -25,9 +25,6 @@ public class GradeAnalytics {
 			System.out.println(i);
 		}
 		
-		
-		
-		
 	}
 	
 	/**
