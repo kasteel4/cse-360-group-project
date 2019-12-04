@@ -2,8 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
+
 
 
 public class GradeAnalytics {
@@ -121,6 +121,35 @@ public class GradeAnalytics {
 		return total / data.size();
 	}
 	
+	public ArrayList <Double> getMode (ArrayList <Double> data)
+	{
+		// list of all the numbers with no duplicates
+		TreeSet <Double> tree = new TreeSet<Double>(data);
+		
+	
+		ArrayList <Double> modes = new ArrayList <Double>();
+		
+		int highmark = 0;
+		
+		for (Double x : tree)
+		{
+			int freq = Collections.frequency(data, x);
+			if (freq == highmark)
+			{
+				modes.add(x);
+			}
+			
+			if (freq > highmark)
+			{
+				modes.clear();
+				modes.add(x);
+				highmark = freq;
+			}
+		}
+		
+		return modes;
+		
+	}
 	
 }
 
