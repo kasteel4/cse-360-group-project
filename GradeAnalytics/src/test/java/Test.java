@@ -10,12 +10,11 @@ class Test {
 	
 	@org.junit.jupiter.api.Test
 	void getMeanTest() {
-		ArrayList<Double> data = new ArrayList<Double>();
 		GradeAnalytics ga = new GradeAnalytics();
-		data.add(3.0);
-		data.add(4.0);
-		data.add(2.0);
-		double mean = ga.getMean(data);
+		ga.addData(3.0);
+		ga.addData(4.0);
+		ga.addData(2.0);
+		double mean = ga.getMean();
 		assertTrue(mean == 3.0);
 	}
 	
@@ -23,14 +22,14 @@ class Test {
 	void getModeTest() {
 		ArrayList<Double> data = new ArrayList<Double>();
 		GradeAnalytics ga = new GradeAnalytics();
-		data.add(3.0);
-		data.add(4.0);
-		data.add(2.0);
-		data.add(2.0);
-		ArrayList<Double> mode = ga.getMode(data);
+		ga.addData(3.0);
+		ga.addData(4.0);
+		ga.addData(2.0);
+		ga.addData(2.0);
+		ArrayList<Double> mode = ga.getMode();
 		assertTrue(mode.contains(2.0));
-		data.add(3.0);
-		mode = ga.getMode(data);
+		ga.addData(3.0);
+		mode = ga.getMode();
 		assertTrue(mode.contains(2.0));
 		assertTrue(mode.contains(3.0));
 		

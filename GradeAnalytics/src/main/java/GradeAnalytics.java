@@ -1,30 +1,32 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 
 
 
 public class GradeAnalytics {
 	
+	private ArrayList<Double> data;
 	
+	/**
+	 * Generic constructor
+	 */
+	public GradeAnalytics() {
+		data = new ArrayList<Double>();
+		System.out.println("New object created.");
+	}
 	
-	public static void main(String[] args) {
-		
-		String fileName = "/Users/Keenan/Desktop/testData.txt";
-		
-		ArrayList<Double> data = new ArrayList<Double>();
-		try {
-			data = parseFile(fileName, 0);
-		} catch (InvalidFileTypeException e) {
-			System.out.println(e.getMessage());
-		}
-		
-		for (double i : data) {
-			System.out.println(i);
-		}
-		
+	/**
+	 * Overloaded constructor for creating new G.A. object from existing data
+	 * 
+	 * @param list
+	 */
+	public GradeAnalytics(ArrayList<Double> list) {
+		data = list;
 	}
 	
 	/**
@@ -37,23 +39,33 @@ public class GradeAnalytics {
 	 * Parses a .txt or .csv file for decimal values and returns them as an
 	 * ArrayList. Does not support any other file types.
 	 */
-	private static ArrayList<Double> parseFile(String fileName, int fileType)
+	public ArrayList<Double> parseFile(String fileName)
 	throws InvalidFileTypeException {
 		
 		BufferedReader br = null;
 		String line = "";
-		
-		ArrayList<Double> data = new ArrayList<Double>();
+		String delim = "";
+		String fileType = "Unknown";
+		final File file = new File(fileName);
 		
 		try {
-			String delim;
-			if (fileType == 0) {
+			
+			fileType = Files.probeContentType(file.toPath());
+			System.out.println(fileType);
+			if (fileType.contentEquals("text/plain"))
 				delim = " ";
-			} else if (fileType == 1) {
+			else
 				delim = ",";
-			} else {
-				throw new InvalidFileTypeException("Not a supported file type.");
-			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			throw new InvalidFileTypeException("File type not supported.");
+		}
+		
+		
+		
+		
+		try {
 			br = new BufferedReader(new FileReader(fileName));
 			
 			while ((line = br.readLine()) != null) {
@@ -65,7 +77,7 @@ public class GradeAnalytics {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new InvalidFileTypeException("File type not supported.");
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} finally {
@@ -83,33 +95,33 @@ public class GradeAnalytics {
 	
 	
 	
-	public void addData(ArrayList <Double> data, double newData) {
+	public void addData(double newData) {
 
 		data.add(newData);
 		
 	}
 	
-	public void deleteData( ArrayList<Double> data, double deleteData)
+	public void deleteData(double deleteData)
 	{
 		data.remove(deleteData);
 	}
 	
-	public int getSize ( ArrayList <Double> data) {
+	public int getSize () {
 		
 		return data.size();
 	}
 	
-	public double maxValue ( ArrayList <Double> data) {
+	public double maxValue () {
 		
 		return Collections.max(data);
 	}
 	
-	public double minValue (ArrayList <Double> data) {
+	public double minValue () {
 		
 		return Collections.min(data);
 	}
 	
-	public double getMean ( ArrayList <Double> data)
+	public double getMean ()
 	{
 		double total = 0;
 		
@@ -121,7 +133,7 @@ public class GradeAnalytics {
 		return total / data.size();
 	}
 	
-	public ArrayList <Double> getMode (ArrayList <Double> data)
+	public ArrayList <Double> getMode ()
 	{
 		// list of all the numbers with no duplicates
 		TreeSet <Double> tree = new TreeSet<Double>(data);
