@@ -102,6 +102,7 @@ public class GradeAnalytics {
 			}
 		}
 		this.sortData();
+		getMedian();
 		history.add(new Action(0));
 		return data;
 	}
@@ -227,6 +228,34 @@ public class GradeAnalytics {
 		
 	}
 	
+	/**
+	 *  Will find the median of the current data.
+	 * 
+	 * <p>
+	 * It assumes the data has already been sorted. If there is an even amount
+	 * of entries it will return the average of the two middle numbers.
+	 * </p>
+	 * 
+	 * @return	Median of the current data
+	 */
+	public double getMedian () {
+		System.out.println(data);
+		//index of the middle of the data
+		int ix = data.size() / 2;
+		double median;
+		
+		//checks if there is an even or odd amount of grades in data
+		if(data.size() % 2 == 0) {
+			//if even it averages the two grades in the middle of the data
+			median = data.get(ix) + data.get(--ix);
+			median /= 2;
+		} else {
+			median = data.get(ix);
+		}
+		
+		System.out.println(median);
+		return median;
+	}
 	
 	/**
 	 * Generates a txt report and saves it in the specified destination
