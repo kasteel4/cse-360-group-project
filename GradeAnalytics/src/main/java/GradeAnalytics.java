@@ -6,20 +6,23 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
 
-import errors.InvalidFileTypeException;
+import errors.*;
 
 
 
 public class GradeAnalytics {
 	
 	private ArrayList<Double> data;
+	private double upperBound;
+	private double lowerBound;
 	
 	/**
 	 * Generic constructor
 	 */
 	public GradeAnalytics() {
 		data = new ArrayList<Double>();
-		System.out.println("New object created.");
+		upperBound = 100.0;
+		lowerBound = 0.0;
 	}
 	
 	/**
@@ -64,9 +67,6 @@ public class GradeAnalytics {
 			throw new InvalidFileTypeException("File type not supported.");
 		}
 		
-		
-		
-		
 		try {
 			br = new BufferedReader(new FileReader(fileName));
 			
@@ -91,21 +91,46 @@ public class GradeAnalytics {
 				}
 			}
 		}
-		
+		this.sortData();
 		return data;
 	}
 	
-	
+	/**
+	 * Sets boundaries for G.A. Object
+	 * 
+	 * upper parameter must be at least 0.1 larger than lower parameter
+	 * 
+	 * @param upper upper boundary value
+	 * @param lower lower boundary value
+	 * @throws InvalidBoundaries
+	 */
+	public void setBoundaries(double upper, double lower) 
+	throws InvalidBoundaries {
+		
+		if (upper < lower)
+			throw new InvalidBoundaries("Upper bound must be higher than lower bound");
+		if (upper - lower < 0.1) {
+			throw new InvalidBoundaries("Bounds must differ by at least 0.1");
+		}
+		
+		this.upperBound = upper;
+		this.lowerBound = lower;
+	}
 	
 	public void addData(double newData) {
 
 		data.add(newData);
+		this.sortData();
 		
 	}
 	
 	public void deleteData(double deleteData)
+	throws DataNotFound
 	{
-		data.remove(deleteData);
+		boolean complete = false;
+		complete = data.remove(deleteData);
+		if (!complete)
+			throw new DataNotFound("The requested value is not in the data set");
 	}
 	
 	public int getSize () {
@@ -130,8 +155,7 @@ public class GradeAnalytics {
 		for ( int i =0; i < data.size(); i++)
 		{
 			total += data.get(i);
-		};
-		
+		}
 		return total / data.size();
 	}
 	
@@ -163,6 +187,10 @@ public class GradeAnalytics {
 		
 		return modes;
 		
+	}
+	
+	private void sortData() {
+		data.sort(null);
 	}
 	
 }

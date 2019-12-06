@@ -4,6 +4,7 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import errors.DataNotFound;
 import errors.InvalidFileTypeException;
 
 import java.util.*;
@@ -130,7 +131,8 @@ public class EditPanel extends JPanel
 			//This is if delete data is pressed
 			if(event.getSource() == deleteData)
 			{
-				int numDelete, value;
+				double numDelete;
+				int value;
 				JLabel errorLabel = new JLabel("");
 				JLabel label1 = new JLabel("Enter Value:");
 				JTextField field1 = new JTextField();
@@ -148,19 +150,26 @@ public class EditPanel extends JPanel
 						try
 						{
 							//Here is the value to delete from data set
-							numDelete = Integer.parseInt(field1.getText());
+							numDelete = Double.parseDouble(field1.getText());
 							/*
 							 * Enter code here
 							 * Search for value
 							 * If it exists delete if not add to error list
 							 */
+							ga.deleteData(numDelete);
 							
 							field1.setText("");
-							errorLabel.setText("");
+							errorLabel.setText("Value Deleted");
+							errorLabel.setForeground(Color.green);
 						}
 						catch(NumberFormatException exception)
 						{
 							errorLabel.setText("Invalid Entry");
+							errorLabel.setForeground(Color.red);
+						}
+						catch(DataNotFound exception)
+						{
+							errorLabel.setText(exception.getMessage());
 							errorLabel.setForeground(Color.red);
 						}
 					}
