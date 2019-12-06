@@ -69,6 +69,8 @@ public class HomePanel extends JPanel
 		public void actionPerformed(ActionEvent event)
 		{
 			//This is when load file is pressed
+			ga = new GradeAnalytics();
+			
 			if(event.getSource() == loadFile)
 			{
 				JFileChooser fs = new JFileChooser(new File("c:\\"));
