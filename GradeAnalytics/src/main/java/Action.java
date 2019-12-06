@@ -30,6 +30,11 @@ public class Action {
 		timestamp = LocalDateTime.now();
 	}
 	
+	public Action(int type) {
+		timestamp = LocalDateTime.now();
+		actionType = type;
+	}
+	
 	/**
 	 * Getter method for ActionType
 	 * @return actionType Value of the private actionType variable

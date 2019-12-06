@@ -13,6 +13,7 @@ import errors.*;
 public class GradeAnalytics {
 	
 	private ArrayList<Double> data;
+	private ArrayList<Action> history;
 	private double upperBound;
 	private double lowerBound;
 	
@@ -21,6 +22,7 @@ public class GradeAnalytics {
 	 */
 	public GradeAnalytics() {
 		data = new ArrayList<Double>();
+		history = new ArrayList<Action>();
 		upperBound = 100.0;
 		lowerBound = 0.0;
 	}
@@ -32,6 +34,9 @@ public class GradeAnalytics {
 	 */
 	public GradeAnalytics(ArrayList<Double> list) {
 		data = list;
+		history = new ArrayList<Action>();
+		upperBound = 100.0;
+		lowerBound = 0.0;
 	}
 	
 	/**
@@ -92,6 +97,7 @@ public class GradeAnalytics {
 			}
 		}
 		this.sortData();
+		history.add(new Action(0));
 		return data;
 	}
 	
@@ -115,6 +121,8 @@ public class GradeAnalytics {
 		
 		this.upperBound = upper;
 		this.lowerBound = lower;
+		
+		history.add(new Action(1));
 	}
 	
 	public void addData(double newData) {
@@ -122,6 +130,7 @@ public class GradeAnalytics {
 		data.add(newData);
 		this.sortData();
 		
+		history.add(new Action(3));
 	}
 	
 	public void deleteData(double deleteData)
@@ -131,6 +140,34 @@ public class GradeAnalytics {
 		complete = data.remove(deleteData);
 		if (!complete)
 			throw new DataNotFound("The requested value is not in the data set");
+		
+		history.add(new Action(4));
+	}
+	
+	/**
+	 * Returns statistical data for the data set
+	 * 
+	 * Values are stored in following indices
+	 * 	0 | Minimum
+	 * 	1 | Maximum
+	 *  2 | Mean
+	 *  3 | Median
+	 *  4...n | Mode
+	 * 
+	 * @return ArrayList with values stored in specified order
+	 */
+	public ArrayList<Double> analyzeData() {
+		ArrayList<Double> results = new ArrayList<Double>();
+		
+		results.add(this.minValue());
+		results.add(this.maxValue());
+		results.add(this.getMean());
+		//results.add(this.getMedian());
+		results.addAll(getMode());
+		
+		history.add(new Action(5));
+		
+		return results;
 	}
 	
 	public int getSize () {
