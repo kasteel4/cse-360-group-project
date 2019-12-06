@@ -67,9 +67,6 @@ public class GradeAnalytics {
 			throw new InvalidFileTypeException("File type not supported.");
 		}
 		
-		
-		
-		
 		try {
 			br = new BufferedReader(new FileReader(fileName));
 			
@@ -94,7 +91,7 @@ public class GradeAnalytics {
 				}
 			}
 		}
-		
+		this.sortData();
 		return data;
 	}
 	
@@ -123,6 +120,7 @@ public class GradeAnalytics {
 	public void addData(double newData) {
 
 		data.add(newData);
+		this.sortData();
 		
 	}
 	
@@ -157,8 +155,7 @@ public class GradeAnalytics {
 		for ( int i =0; i < data.size(); i++)
 		{
 			total += data.get(i);
-		};
-		
+		}
 		return total / data.size();
 	}
 	
@@ -190,6 +187,10 @@ public class GradeAnalytics {
 		
 		return modes;
 		
+	}
+	
+	private void sortData() {
+		data.sort(null);
 	}
 	
 }
