@@ -127,7 +127,7 @@ public class HomePanel extends JPanel
 							errorLabel.setText("Invalid Number");
 							errorLabel.setForeground(Color.red);
 						}
-						catch (InvalidBoundaries exception)
+						catch(InvalidBoundaries exception)
 						{
 							errorLabel.setText(exception.getMessage());
 							errorLabel.setForeground(Color.red);

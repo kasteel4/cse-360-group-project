@@ -127,8 +127,12 @@ public class GradeAnalytics {
 	}
 	
 	public void deleteData(double deleteData)
+	throws DataNotFound
 	{
-		data.remove(deleteData);
+		boolean complete = false;
+		complete = data.remove(deleteData);
+		if (!complete)
+			throw new DataNotFound("The requested value is not in the data set");
 	}
 	
 	public int getSize () {
