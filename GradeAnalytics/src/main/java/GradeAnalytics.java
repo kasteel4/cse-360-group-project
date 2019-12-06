@@ -81,7 +81,8 @@ public class GradeAnalytics {
 				if (delim.contains(",")) {
 					String[] lineRead = line.split(delim);
 					for (int i = 0; i < lineRead.length; i++) {
-						data.add(Double.parseDouble(lineRead[i]));
+						if (!lineRead[i].equals(""))
+							data.add(Double.parseDouble(lineRead[i]));
 					}
 				} else
 					data.add(Double.parseDouble(line));
@@ -128,6 +129,10 @@ public class GradeAnalytics {
 		this.lowerBound = lower;
 		
 		history.add(new Action(1));
+	}
+	
+	public ArrayList<Double> getData() {
+		return data;
 	}
 	
 	public void addData(double newData) {
