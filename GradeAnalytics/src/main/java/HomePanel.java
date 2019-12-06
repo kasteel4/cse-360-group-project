@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import errors.InvalidBoundaries;
 import errors.InvalidFileTypeException;
 
 import java.util.*;
@@ -90,7 +91,8 @@ public class HomePanel extends JPanel
 			//This is when set boundaries is clicked
 			if(event.getSource() == setBoundaries)
 			{
-				int upperB, lowerB, value;
+				double upperB, lowerB;
+				int value;
 				JLabel errorLabel = new JLabel("");
 				JLabel label1 = new JLabel("Lower Boundary:\n(Default 0)");
 				JTextField field1 = new JTextField();
@@ -112,16 +114,22 @@ public class HomePanel extends JPanel
 						try
 						{
 							//Here are values to update boundaries
-							lowerB = Integer.parseInt(field1.getText());
+							lowerB = Double.parseDouble(field1.getText());
 							field1.setText("");
-							upperB = Integer.parseInt(field2.getText());
+							upperB = Double.parseDouble(field2.getText());
 							field2.setText("");
+							ga.setBoundaries(upperB, lowerB);
 							errorLabel.setText("Boundaries Set");
 							errorLabel.setForeground(Color.green);
 						}
 						catch(NumberFormatException exception)
 						{
 							errorLabel.setText("Invalid Number");
+							errorLabel.setForeground(Color.red);
+						}
+						catch (InvalidBoundaries exception)
+						{
+							errorLabel.setText(exception.getMessage());
 							errorLabel.setForeground(Color.red);
 						}
 					}
