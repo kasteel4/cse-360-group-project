@@ -32,7 +32,11 @@ class Test {
 		mode = ga.getMode();
 		assertTrue(mode.contains(2.0));
 		assertTrue(mode.contains(3.0));
-		
+	}
+	
+	@org.junit.jupiter.api.Test
+	void setBoundariesTest() {
+		GradeAnalytics ga = new GradeAnalytics();
 	}
 
 }
