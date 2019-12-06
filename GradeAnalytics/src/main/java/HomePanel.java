@@ -2,6 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+
+import errors.InvalidFileTypeException;
+
 import java.util.*;
 import java.io.*;
 
