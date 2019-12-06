@@ -102,7 +102,6 @@ public class GradeAnalytics {
 			}
 		}
 		this.sortData();
-		getMedian();
 		history.add(new Action(0));
 		return data;
 	}
@@ -164,8 +163,8 @@ public class GradeAnalytics {
 		results.add(this.minValue());
 		results.add(this.maxValue());
 		results.add(this.getMean());
-		//results.add(this.getMedian());
-		results.addAll(getMode());
+		results.add(this.getMedian());
+		results.addAll(this.getMode());
 		
 		history.add(new Action(5));
 		

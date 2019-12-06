@@ -37,18 +37,20 @@ class Test {
 	void analyzeDataTest() {
 		GradeAnalytics ga = new GradeAnalytics();
 		ga.addData(2.0);
-		ga.addData(3.0);
+		ga.addData(2.0);
 		ga.addData(3.0);
 		ga.addData(4.0);
 		ga.addData(5.0);
+		ga.addData(5.0);
 		ga.addData(6.0);
 		ArrayList<Double> results = ga.analyzeData();
+		System.out.println(results);
 		assertTrue(results.get(0) == 2.0);
 		assertTrue(results.get(1) == 6.0);
-		assertTrue(results.get(2) == 23.0/6);
-		assertTrue(results.get(3) == 3.5);
-		assertTrue(results.get(4) == 3.0);
-		assertTrue(results.get(5) == 3.0);
+		assertTrue(results.get(2) == 27.0/7);
+		assertTrue(results.get(3) == 4.0);
+		assertTrue(results.get(4) == 2.0);
+		assertTrue(results.get(5) == 5.0);
 	}
 
 }
