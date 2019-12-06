@@ -81,7 +81,8 @@ public class GradeAnalytics {
 				if (delim.contains(",")) {
 					String[] lineRead = line.split(delim);
 					for (int i = 0; i < lineRead.length; i++) {
-						data.add(Double.parseDouble(lineRead[i]));
+						if (!lineRead[i].equals(""))
+							data.add(Double.parseDouble(lineRead[i]));
 					}
 				} else
 					data.add(Double.parseDouble(line));
@@ -102,7 +103,6 @@ public class GradeAnalytics {
 			}
 		}
 		this.sortData();
-		getMedian();
 		history.add(new Action(0));
 		return data;
 	}
@@ -129,6 +129,10 @@ public class GradeAnalytics {
 		this.lowerBound = lower;
 		
 		history.add(new Action(1));
+	}
+	
+	public ArrayList<Double> getData() {
+		return data;
 	}
 	
 	public void addData(double newData) {
@@ -164,8 +168,8 @@ public class GradeAnalytics {
 		results.add(this.minValue());
 		results.add(this.maxValue());
 		results.add(this.getMean());
-		//results.add(this.getMedian());
-		results.addAll(getMode());
+		results.add(this.getMedian());
+		results.addAll(this.getMode());
 		
 		history.add(new Action(5));
 		
@@ -239,7 +243,6 @@ public class GradeAnalytics {
 	 * @return	Median of the current data
 	 */
 	public double getMedian () {
-		System.out.println(data);
 		//index of the middle of the data
 		int ix = data.size() / 2;
 		double median;
@@ -253,7 +256,6 @@ public class GradeAnalytics {
 			median = data.get(ix);
 		}
 		
-		System.out.println(median);
 		return median;
 	}
 	

@@ -69,13 +69,14 @@ public class ResultsPanel extends JPanel
 				 * Get the data that we need to display here 
 				 * from the arrayList or object that you guys gave created
 				 */
+				//See analyzeData method description for "results" format
+				ArrayList<Double> results = ga.analyzeData();
 			}
 			//This is if display is pressed
 			if(event.getSource() == display)
 			{
-				/*
-				 * Get the arrayList in order so I can display the data
-				 */
+				//ArrayList from GA object
+				ArrayList<Double> data = ga.getData();
 			}
 			//This is if display graphs is pressed
 			if(event.getSource() == displayGraphs)
