@@ -109,7 +109,6 @@ public class GradeAnalytics {
 			}
 		}
 		this.sortData();
-		System.out.println(data);
 		history.add(new Action(0));
 		return data;
 	}
