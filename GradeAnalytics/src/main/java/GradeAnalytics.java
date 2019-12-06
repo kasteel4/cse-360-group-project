@@ -60,6 +60,7 @@ public class GradeAnalytics {
 		String line = "";
 		String delim = "";
 		String fileType = "Unknown";
+		double curr;
 		final File file = new File(fileName);
 		
 		try {
@@ -82,7 +83,14 @@ public class GradeAnalytics {
 			while ((line = br.readLine()) != null) {
 				String[] lineRead = line.split(delim);
 				for (int i = 0; i < lineRead.length; i++) {
-					data.add(Double.parseDouble(lineRead[i]));
+					try {
+						curr = Double.parseDouble(lineRead[i]);
+						if(isWithinBoundaries(curr)) {
+							data.add(curr);
+						} else {
+							throw new DataOutOfBounds(curr + " is not within the current boundaries.");
+						}
+					} catch(DataOutOfBounds e) {}
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -101,7 +109,7 @@ public class GradeAnalytics {
 			}
 		}
 		this.sortData();
-		getMedian();
+		System.out.println(data);
 		history.add(new Action(0));
 		return data;
 	}
@@ -128,6 +136,20 @@ public class GradeAnalytics {
 		this.lowerBound = lower;
 		
 		history.add(new Action(1));
+	}
+	
+	/**
+	 * Tests if the number passed is within the preset boundaries.
+	 * 
+	 * @param test	Number to be checked
+	 * @return	If the number is within the boundaries
+	 */
+	private boolean isWithinBoundaries(double test) {
+		if(test >= lowerBound && test <= upperBound) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public void addData(double newData) {
@@ -242,7 +264,6 @@ public class GradeAnalytics {
 	 * @return	Median of the current data
 	 */
 	public double getMedian () {
-		System.out.println(data);
 		//index of the middle of the data
 		int ix = data.size() / 2;
 		double median;
@@ -256,7 +277,6 @@ public class GradeAnalytics {
 			median = data.get(ix);
 		}
 		
-		System.out.println(median);
 		return median;
 	}
 	
