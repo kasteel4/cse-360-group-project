@@ -52,14 +52,16 @@ public class GradeAnalytics {
 	 * 
 	 * Parses a .txt or .csv file for decimal values and returns them as an
 	 * ArrayList. Does not support any other file types.
+	 * @throws  DataOutOfBounds 
 	 */
 	public ArrayList<Double> parseFile(String fileName)
-	throws InvalidFileTypeException {
+	throws InvalidFileTypeException, InvalidDataValue, DataOutOfBounds {
 		
 		BufferedReader br = null;
 		String line = "";
 		String delim = "";
 		String fileType = "Unknown";
+		double curr;
 		final File file = new File(fileName);
 		
 		try {
@@ -78,14 +80,27 @@ public class GradeAnalytics {
 			br = new BufferedReader(new FileReader(fileName));
 			
 			while ((line = br.readLine()) != null) {
-				if (delim.contains(",")) {
+				if (!delim.equals("")) {
 					String[] lineRead = line.split(delim);
 					for (int i = 0; i < lineRead.length; i++) {
-						if (!lineRead[i].equals(""))
-							data.add(Double.parseDouble(lineRead[i]));
+						if (!lineRead[i].equals("")) {
+							curr = Double.parseDouble(lineRead[i]);
+							if(isWithinBoundaries(curr)) {
+								data.add(curr);
+							} else {
+								throw new DataOutOfBounds(curr + " is not within the current boundaries.");
+							}
+						}
 					}
-				} else
-					data.add(Double.parseDouble(line));
+				} else {
+					curr = Double.parseDouble(line);
+					if(isWithinBoundaries(curr)) {
+						data.add(curr);
+					} else {
+						throw new DataOutOfBounds(curr + " is not within the current boundaries.");
+					}
+				}
+				
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -93,6 +108,8 @@ public class GradeAnalytics {
 			throw new InvalidFileTypeException("File type not supported.");
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
+		} catch (DataOutOfBounds e) {
+			throw new DataOutOfBounds(e.getMessage());
 		} finally {
 			if (br != null) {
 				try {
@@ -131,8 +148,23 @@ public class GradeAnalytics {
 		history.add(new Action(1));
 	}
 	
+
+	/**
+	 * Tests if the number passed is within the preset boundaries.
+	 * 
+	 * @param test	Number to be checked
+	 * @return	If the number is within the boundaries
+	 */
+	private boolean isWithinBoundaries(double test) {
+		if(test >= lowerBound && test <= upperBound)
+			return true;
+		else
+			return false;
+	}
+    
 	public ArrayList<Double> getData() {
 		return data;
+
 	}
 	
 	public void addData(double newData) {

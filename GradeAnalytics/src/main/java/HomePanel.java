@@ -3,8 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-import errors.InvalidBoundaries;
-import errors.InvalidFileTypeException;
+import errors.*;
 
 import java.util.*;
 import java.io.*;
@@ -85,6 +84,10 @@ public class HomePanel extends JPanel
 						
 					} catch (InvalidFileTypeException e) {
 						//*****Should be added to error console instead of sys out
+						System.out.println(e.getMessage());
+					} catch (DataOutOfBounds e) {
+						System.out.println(e.getMessage());
+					} catch (InvalidDataValue e) {
 						System.out.println(e.getMessage());
 					}
 					

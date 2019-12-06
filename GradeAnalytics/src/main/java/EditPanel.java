@@ -5,6 +5,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 import errors.DataNotFound;
+import errors.DataOutOfBounds;
+import errors.InvalidDataValue;
 import errors.InvalidFileTypeException;
 
 import java.util.*;
@@ -85,6 +87,10 @@ public class EditPanel extends JPanel
 						ga.parseFile(fileName);
 					} catch (InvalidFileTypeException e) {
 						//*****Should be added to error console instead of sys out
+						System.out.println(e.getMessage());
+					} catch (DataOutOfBounds e) {
+						System.out.println(e.getMessage());
+					} catch (InvalidDataValue e) {
 						System.out.println(e.getMessage());
 					}
 					
