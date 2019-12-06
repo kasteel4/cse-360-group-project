@@ -1,4 +1,4 @@
-import java.time.LocalDateTime;;
+import java.time.LocalDateTime;
 
 /**
  * Action object for maintaining history of user action
@@ -65,28 +65,28 @@ public class Action {
 		String str = timestamp.toString();
 		switch (actionType) {
 		case 0:
-			str += " : Loaded File";
+			str += " : Loaded File\n";
 			break;
 		case 1:
-			str = " : Set Boundaries";
+			str = " : Set Boundaries\n";
 			break;
 		case 2:
-			str = " : Appended Data";
+			str = " : Appended Data\n";
 			break;
 		case 3:
-			str = " : Added Data Point";
+			str = " : Added Data Point\n";
 			break;
 		case 4:
-			str = " : Deleted Data Point";
+			str = " : Deleted Data Point\n";
 			break;
 		case 5:
-			str = " : Analysis run on data";
+			str = " : Analysis run on data\n";
 			break;
 		case 6:
-			str = " : Grade data displayed";
+			str = " : Grade data displayed\n";
 			break;
 		case 7:
-			str = " : Distribution graphs displayed";
+			str = " : Distribution graphs displayed\n";
 			break;
 		}
 		

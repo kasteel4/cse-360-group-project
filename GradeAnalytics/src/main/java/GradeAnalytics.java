@@ -1,10 +1,14 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.time.LocalDateTime;
 
 import errors.*;
 
@@ -224,6 +228,46 @@ public class GradeAnalytics {
 		
 		return modes;
 		
+	}
+	
+	
+	/**
+	 * Generates a txt report and saves it in the specified destination
+	 * 
+	 * @param filepath Destination to save txt file
+	 */
+	public void saveReport(String filepath)
+	throws IOException {
+		String content = this.generateReport();
+		Path path = Paths.get(filepath);
+		
+		try {
+			BufferedWriter br = Files.newBufferedWriter(path);
+			br.write(content);
+			br.flush();
+		} catch (IOException e) {
+			throw new IOException(e);
+		}
+	}
+	
+	private String generateReport() {
+		String content = "";
+		content += "GradeAnalytics Report | " + LocalDateTime.now() + "\n\n";
+		content += "Size of data set: " + this.getSize() + "\n";
+		content += "Minimum/Maximum: " + this.minValue() + "/" + this.maxValue() + "\n";
+		content += "Mean: " + this.getMean() + "\n";
+		content += "Median: " + this.getMean() + "\n";
+		content += "Mode(s): ";
+		for (double val : this.getMode())
+			content += val + " ";
+		content += "\n\n*****HISTORY*****";
+		for (Action i : history) {
+			content += i.toString();
+		}
+		
+		content += "\nEND OF REPORT";
+		
+		return content;
 	}
 	
 	private void sortData() {
