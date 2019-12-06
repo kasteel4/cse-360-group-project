@@ -238,7 +238,6 @@ public class GradeAnalytics {
 	 * @return	Median of the current data
 	 */
 	public double getMedian () {
-		System.out.println(data);
 		//index of the middle of the data
 		int ix = data.size() / 2;
 		double median;
@@ -252,7 +251,6 @@ public class GradeAnalytics {
 			median = data.get(ix);
 		}
 		
-		System.out.println(median);
 		return median;
 	}
 	
