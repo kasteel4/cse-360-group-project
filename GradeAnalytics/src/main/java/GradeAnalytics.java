@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
 
+import errors.InvalidFileTypeException;
+
 
 
 public class GradeAnalytics {
