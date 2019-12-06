@@ -52,6 +52,7 @@ public class GradeAnalytics {
 	 * 
 	 * Parses a .txt or .csv file for decimal values and returns them as an
 	 * ArrayList. Does not support any other file types.
+
 	 * @throws  DataOutOfBounds 
 	 */
 	public ArrayList<Double> parseFile(String fileName)
@@ -80,6 +81,7 @@ public class GradeAnalytics {
 			br = new BufferedReader(new FileReader(fileName));
 			
 			while ((line = br.readLine()) != null) {
+
 				if (!delim.equals("")) {
 					String[] lineRead = line.split(delim);
 					for (int i = 0; i < lineRead.length; i++) {
@@ -100,7 +102,6 @@ public class GradeAnalytics {
 						throw new DataOutOfBounds(curr + " is not within the current boundaries.");
 					}
 				}
-				
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -108,6 +109,7 @@ public class GradeAnalytics {
 			throw new InvalidFileTypeException("File type not supported.");
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
+
 		} catch (DataOutOfBounds e) {
 			throw new DataOutOfBounds(e.getMessage());
 		} finally {
