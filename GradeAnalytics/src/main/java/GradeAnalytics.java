@@ -60,6 +60,7 @@ public class GradeAnalytics {
 		String line = "";
 		String delim = "";
 		String fileType = "Unknown";
+		double curr;
 		final File file = new File(fileName);
 		
 		try {
@@ -78,6 +79,17 @@ public class GradeAnalytics {
 			br = new BufferedReader(new FileReader(fileName));
 			
 			while ((line = br.readLine()) != null) {
+				String[] lineRead = line.split(delim);
+				for (int i = 0; i < lineRead.length; i++) {
+					try {
+						curr = Double.parseDouble(lineRead[i]);
+						if(isWithinBoundaries(curr)) {
+							data.add(curr);
+						} else {
+							throw new DataOutOfBounds(curr + " is not within the current boundaries.");
+						}
+					} catch(DataOutOfBounds e) {}
+				}
 				if (delim.contains(",")) {
 					String[] lineRead = line.split(delim);
 					for (int i = 0; i < lineRead.length; i++) {
@@ -131,8 +143,23 @@ public class GradeAnalytics {
 		history.add(new Action(1));
 	}
 	
+
+	/**
+	 * Tests if the number passed is within the preset boundaries.
+	 * 
+	 * @param test	Number to be checked
+	 * @return	If the number is within the boundaries
+	 */
+	private boolean isWithinBoundaries(double test) {
+		if(test >= lowerBound && test <= upperBound) {
+			return true;
+		} else {
+			return false;
+	}
+    
 	public ArrayList<Double> getData() {
 		return data;
+
 	}
 	
 	public void addData(double newData) {
