@@ -67,9 +67,7 @@ public class GradeAnalytics {
 			
 			fileType = Files.probeContentType(file.toPath());
 			System.out.println(fileType);
-			if (fileType.contentEquals("text/plain"))
-				delim = " ";
-			else
+			if (!fileType.contentEquals("text/plain"))
 				delim = ",";
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -92,6 +90,14 @@ public class GradeAnalytics {
 						}
 					} catch(DataOutOfBounds e) {}
 				}
+				if (delim.contains(",")) {
+					String[] lineRead = line.split(delim);
+					for (int i = 0; i < lineRead.length; i++) {
+						if (!lineRead[i].equals(""))
+							data.add(Double.parseDouble(lineRead[i]));
+					}
+				} else
+					data.add(Double.parseDouble(line));
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -137,6 +143,7 @@ public class GradeAnalytics {
 		history.add(new Action(1));
 	}
 	
+
 	/**
 	 * Tests if the number passed is within the preset boundaries.
 	 * 
@@ -148,7 +155,11 @@ public class GradeAnalytics {
 			return true;
 		} else {
 			return false;
-		}
+	}
+    
+	public ArrayList<Double> getData() {
+		return data;
+
 	}
 	
 	public void addData(double newData) {
@@ -173,12 +184,8 @@ public class GradeAnalytics {
 	/**
 	 * Returns statistical data for the data set
 	 * 
-	 * Values are stored in following indices
-	 * 	0 | Minimum
-	 * 	1 | Maximum
-	 *  2 | Mean
-	 *  3 | Median
-	 *  4...n | Mode
+	 * Values are stored in following indices: 
+	 * 0: Minimum, 1: Maximum, 2: Mean, 3: Median, 4...n: Mode
 	 * 
 	 * @return ArrayList with values stored in specified order
 	 */
@@ -188,8 +195,8 @@ public class GradeAnalytics {
 		results.add(this.minValue());
 		results.add(this.maxValue());
 		results.add(this.getMean());
-		//results.add(this.getMedian());
-		results.addAll(getMode());
+		results.add(this.getMedian());
+		results.addAll(this.getMode());
 		
 		history.add(new Action(5));
 		
