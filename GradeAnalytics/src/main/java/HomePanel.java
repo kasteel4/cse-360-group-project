@@ -68,8 +68,6 @@ public class HomePanel extends JPanel
 		public void actionPerformed(ActionEvent event)
 		{
 			//This is when load file is pressed
-			ga = new GradeAnalytics();
-			
 			if(event.getSource() == loadFile)
 			{
 				JFileChooser fs = new JFileChooser(new File("c:\\"));
@@ -80,6 +78,7 @@ public class HomePanel extends JPanel
 					//Here is the selected file which will contain all of the data
 					String fileName = fs.getSelectedFile().getPath();
 					try {
+						ga.clearDataAndHistory();
 						ga.parseFile(fileName);
 						
 					} catch (InvalidFileTypeException e) {

@@ -291,6 +291,23 @@ public class GradeAnalytics {
 		return median;
 	}
 	
+	public ArrayList<Integer> numEntriesGraphData() {
+		ArrayList<Integer> results = new ArrayList<Integer>();
+		
+		for (int i = 0; i <10; i++)
+			results.add(0);
+		
+		double boundaryInterval = (this.upperBound - this.lowerBound) / 10.0;
+		System.out.println(this.lowerBound);
+		System.out.println(this.upperBound);
+		System.out.println(boundaryInterval);
+		for (double point : this.data) {
+			results.set((int)((point-this.lowerBound)/boundaryInterval), results.get((int)((point-this.lowerBound)/boundaryInterval))+1);
+		}
+		System.out.println(results);
+		return results;
+	}
+	
 	/**
 	 * Generates a txt report and saves it in the specified destination
 	 * 
@@ -328,6 +345,11 @@ public class GradeAnalytics {
 		content += "\nEND OF REPORT";
 		
 		return content;
+	}
+	
+	public void clearDataAndHistory() {
+		this.data = new ArrayList<Double>();
+		this.history = new ArrayList<Action>();
 	}
 	
 	private void sortData() {
