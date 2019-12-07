@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.util.*;
+import org.jfree.chart.*;
+import org.jfree.data.*;
 
 public class ResultsPanel extends JPanel
 {
@@ -16,6 +18,7 @@ public class ResultsPanel extends JPanel
 	JPanel panel2 = new JPanel(new GridLayout(2,4));
 	JPanel panel3 = new JPanel(new BorderLayout());
 	JPanel panel4 = new JPanel(new BorderLayout());
+	JFreeChart chart;
 
 	private GradeAnalytics ga;
 
