@@ -315,6 +315,30 @@ public class GradeAnalytics {
 		return results;
 	}
 	
+	public ArrayList<Double> avgGraphData() {
+		ArrayList<Double> results = new ArrayList<Double>();
+		ArrayList<Integer> counts = new ArrayList<Integer>();
+		
+		for (int i = 0; i <10; i++) {
+			results.add(0.0);
+			counts.add(0);
+		}
+		
+		double boundaryInterval = (this.upperBound - this.lowerBound) / 10.0;
+		
+		for (double point : this.data) {
+			results.set((int)((point-this.lowerBound)/boundaryInterval), (int)((point-this.lowerBound)/boundaryInterval)+point);
+			counts.set((int)((point-this.lowerBound)/boundaryInterval), counts.get((int)((point-this.lowerBound)/boundaryInterval))+1);
+		}
+		
+		for (int i = 0; i < results.size(); i ++) {
+			if (counts.get(i) != 0)
+				results.set(i, results.get(i)/counts.get(i));
+		}
+		
+		return results;
+	}
+	
 	/**
 	 * Generates a txt report and saves it in the specified destination
 	 * 

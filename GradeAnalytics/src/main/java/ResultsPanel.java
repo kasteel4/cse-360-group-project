@@ -86,6 +86,7 @@ public class ResultsPanel extends JPanel
 				 * Get the data that I need for the graphs here
 				 */
 				ga.numEntriesGraphData();
+				ga.avgGraphData();
 			}
 			//This is if create reports is pressed
 			if(event.getSource() == createReport)
