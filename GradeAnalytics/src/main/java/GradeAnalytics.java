@@ -57,12 +57,12 @@ public class GradeAnalytics {
 	 */
 	public ArrayList<Double> parseFile(String fileName)
 	throws InvalidFileTypeException, InvalidDataValue, DataOutOfBounds {
-		
 		BufferedReader br = null;
 		String line = "";
 		String delim = "";
 		String fileType = "Unknown";
 		double curr;
+		
 		final File file = new File(fileName);
 		
 		if (this.data.isEmpty()) {
@@ -74,7 +74,6 @@ public class GradeAnalytics {
 		try {
 			
 			fileType = Files.probeContentType(file.toPath());
-			System.out.println(fileType);
 			if (!fileType.contentEquals("text/plain"))
 				delim = ",";
 		} catch (IOException e) {
@@ -92,21 +91,25 @@ public class GradeAnalytics {
 					String[] lineRead = line.split(delim);
 					for (int i = 0; i < lineRead.length; i++) {
 						if (!lineRead[i].equals("")) {
-							curr = Double.parseDouble(lineRead[i]);
-							if(isWithinBoundaries(curr)) {
-								data.add(curr);
-							} else {
-								throw new DataOutOfBounds(curr + " is not within the current boundaries.");
-							}
+							try {
+								curr = Double.parseDouble(lineRead[i]);							
+								if(isWithinBoundaries(curr)) {
+									data.add(curr);
+								} else {
+									throw new DataOutOfBounds(curr + " is not within the current boundaries.");
+								}
+							} catch(DataOutOfBounds e) {}
 						}
 					}
 				} else {
-					curr = Double.parseDouble(line);
-					if(isWithinBoundaries(curr)) {
-						data.add(curr);
-					} else {
-						throw new DataOutOfBounds(curr + " is not within the current boundaries.");
-					}
+					try {
+						curr = Double.parseDouble(line);
+						if(isWithinBoundaries(curr)) {
+							data.add(curr);
+						} else {
+							throw new DataOutOfBounds(curr + " is not within the current boundaries.");
+						}
+					} catch(DataOutOfBounds e) {}
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -115,9 +118,6 @@ public class GradeAnalytics {
 			throw new InvalidFileTypeException("File type not supported.");
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-
-		} catch (DataOutOfBounds e) {
-			throw new DataOutOfBounds(e.getMessage());
 		} finally {
 			if (br != null) {
 				try {
@@ -127,7 +127,9 @@ public class GradeAnalytics {
 				}
 			}
 		}
+
 		this.sortData();
+		
 		return data;
 	}
 	
@@ -148,13 +150,21 @@ public class GradeAnalytics {
 		if (upper - lower < 0.1) {
 			throw new InvalidBoundaries("Bounds must differ by at least 0.1");
 		}
-		for (double point : this.data) {
-			if (point > upper || point < lower)
-				throw new InvalidBoundaries("Data exceeds new boundaries");
-		}
 		
 		this.upperBound = upper;
 		this.lowerBound = lower;
+		
+		//removes data that became out of bounds due to changing boundaries
+		double curr;
+		for(int i = data.size() - 1; i >= 0; i--) {
+			try {
+				curr = data.get(i);
+			if(!isWithinBoundaries(curr)) {
+				data.remove(i);
+				throw new DataOutOfBounds(curr + " is no longer within the boundaries.");
+			}
+			} catch(DataOutOfBounds e) {}
+		}
 		
 		history.add(new Action(1));
 	}
