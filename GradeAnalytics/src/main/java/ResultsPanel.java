@@ -66,6 +66,7 @@ public class ResultsPanel extends JPanel
 	{
 		public void actionPerformed(ActionEvent event)
 		{
+			String errorDisplay = "";
 			//This is if analyze is pressed
 			if(event.getSource() == analyze)
 			{

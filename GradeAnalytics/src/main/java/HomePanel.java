@@ -69,6 +69,7 @@ public class HomePanel extends JPanel
 	{
 		public void actionPerformed(ActionEvent event)
 		{
+			String errorDisplay = "";
 			//This is when load file is pressed
 			if(event.getSource() == loadFile)
 			{

@@ -75,6 +75,7 @@ public class EditPanel extends JPanel
 	{
 		public void actionPerformed(ActionEvent event)
 		{
+			String errorDisplay = "";
 			//This is when append data is pressed
 			if(event.getSource() == appendData)
 			{
