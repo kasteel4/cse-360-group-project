@@ -74,7 +74,6 @@ public class GradeAnalytics {
 		try {
 			
 			fileType = Files.probeContentType(file.toPath());
-			System.out.println(fileType);
 			if (!fileType.contentEquals("text/plain"))
 				delim = ",";
 		} catch (IOException e) {
@@ -96,6 +95,7 @@ public class GradeAnalytics {
 							if(isWithinBoundaries(curr)) {
 								data.add(curr);
 							} else {
+								this.clearDataAndHistory();
 								throw new DataOutOfBounds(curr + " is not within the current boundaries.");
 							}
 						}
@@ -105,6 +105,7 @@ public class GradeAnalytics {
 					if(isWithinBoundaries(curr)) {
 						data.add(curr);
 					} else {
+						this.clearDataAndHistory();
 						throw new DataOutOfBounds(curr + " is not within the current boundaries.");
 					}
 				}
