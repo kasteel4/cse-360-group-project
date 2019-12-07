@@ -140,6 +140,12 @@ public class EditPanel extends JPanel
 							errorLabel.setText("Invalid Entry.  Cancel or enter valid value.");
 							errorLabel.setForeground(Color.red);
 						}
+						catch(DataOutOfBounds exception)
+						{
+							errorList.add(exception.getMessage());
+							errorLabel.setText(exception.getMessage());
+							errorLabel.setForeground(Color.red);
+						}
 					}
 				}
 				while(value != JOptionPane.CANCEL_OPTION);

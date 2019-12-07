@@ -103,7 +103,7 @@ public class ResultsPanel extends JPanel
 			{
 				//Could you update .getData() to return a sorted array in decreasing order
 				//ArrayList from GA object
-				ArrayList<Double> data = ga.getData();
+				ArrayList<Double> data = ga.displayData();
 				String str = "";
 				JLabel errorLabel = new JLabel();
 				JTextArea column1 = new JTextArea();
@@ -117,7 +117,6 @@ public class ResultsPanel extends JPanel
 				JPanel panel1 = new JPanel(new BorderLayout());
 				JPanel panel = new JPanel(new GridLayout(0,4));
 				JPanel panel2 = new JPanel(new BorderLayout());
-				ArrayList<Double> data = ga.getData();
 				//I couldn't break the sections of the array into 4 even parts. This is the best I could get it to work
 				//It has to be of size 6 or bigger. You guys are welcome to try to fix it. You can try moving the for loops
 				//around to see if it can break it apart in 4 even arrays or something. 
@@ -186,6 +185,7 @@ public class ResultsPanel extends JPanel
 					{
 						errorList.add(e.getMessage());
 					}
+				}
 			}
 			for(int i = 0; i < errorList.size(); i++)
 			{

@@ -138,7 +138,7 @@ public class HomePanel extends JPanel
 						{
 							errorList.add(exception.getMessage());
 							errorLabel.setText("Invalid Value. Cancel or enter valid value.");
-							errorLabel.setForeground(Color.red)
+							errorLabel.setForeground(Color.red);
 						}
 						catch(InvalidBoundaries exception)
 						{

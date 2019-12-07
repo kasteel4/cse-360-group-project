@@ -65,6 +65,12 @@ public class GradeAnalytics {
 		double curr;
 		final File file = new File(fileName);
 		
+		if (this.data.isEmpty()) {
+			this.history.add(new Action(0));
+		} else {
+			this.history.add(new Action(2));
+		}
+		
 		try {
 			
 			fileType = Files.probeContentType(file.toPath());
@@ -122,7 +128,6 @@ public class GradeAnalytics {
 			}
 		}
 		this.sortData();
-		history.add(new Action(0));
 		return data;
 	}
 	
@@ -142,6 +147,10 @@ public class GradeAnalytics {
 			throw new InvalidBoundaries("Upper bound must be higher than lower bound");
 		if (upper - lower < 0.1) {
 			throw new InvalidBoundaries("Bounds must differ by at least 0.1");
+		}
+		for (double point : this.data) {
+			if (point > upper || point < lower)
+				throw new InvalidBoundaries("Data exceeds new boundaries");
 		}
 		
 		this.upperBound = upper;
@@ -165,16 +174,27 @@ public class GradeAnalytics {
 	}
     
 	public ArrayList<Double> getData() {
-		return data;
-
+		return this.data;
 	}
 	
-	public void addData(double newData) {
-
-		data.add(newData);
-		this.sortData();
+	public ArrayList<Double> displayData() {
+		ArrayList<Double> reverseData = this.data;
+		reverseData.sort(Comparator.reverseOrder());
+		this.history.add(new Action(6));
+		return this.data;
+	}
+	
+	public void addData(double newData) 
+	throws DataOutOfBounds {
+		if (newData >= this.lowerBound && newData <= this.upperBound) {
+			data.add(newData);
+			this.sortData();
+			
+			history.add(new Action(3));
+		} else {
+			throw new DataOutOfBounds("Data point is out of set boundaries");
+		}
 		
-		history.add(new Action(3));
 	}
 	
 	public void deleteData(double deleteData)
@@ -334,8 +354,14 @@ public class GradeAnalytics {
 		double boundaryInterval = (this.upperBound - this.lowerBound) / 10.0;
 		
 		for (double point : this.data) {
-			results.set((int)((point-this.lowerBound)/boundaryInterval), results.get((int)((point-this.lowerBound)/boundaryInterval))+1);
+			if (point >= this.upperBound) {
+				results.set(9, results.get(9) + 1);
+			} else {
+				results.set((int)((point-this.lowerBound)/boundaryInterval), results.get((int)((point-this.lowerBound)/boundaryInterval))+1);
+			}
 		}
+		
+		this.history.add(new Action(7));
 		
 		return results;
 	}
@@ -352,8 +378,14 @@ public class GradeAnalytics {
 		double boundaryInterval = (this.upperBound - this.lowerBound) / 10.0;
 		
 		for (double point : this.data) {
-			results.set((int)((point-this.lowerBound)/boundaryInterval), (int)((point-this.lowerBound)/boundaryInterval)+point);
-			counts.set((int)((point-this.lowerBound)/boundaryInterval), counts.get((int)((point-this.lowerBound)/boundaryInterval))+1);
+			if (point >= this.upperBound) {
+				results.set(9,  results.get(9) + point);
+				counts.set(9, counts.get(9) + 1);
+			} else {
+				results.set((int)((point-this.lowerBound)/boundaryInterval), (int)((point-this.lowerBound)/boundaryInterval)+point);
+				counts.set((int)((point-this.lowerBound)/boundaryInterval), counts.get((int)((point-this.lowerBound)/boundaryInterval))+1);
+			}
+			
 		}
 		
 		for (int i = 0; i < results.size(); i ++) {
@@ -393,7 +425,8 @@ public class GradeAnalytics {
 		content += "Mode(s): ";
 		for (double val : this.getMode())
 			content += val + " ";
-		content += "\n\n*****HISTORY*****";
+		content += "Boundaries: " + this.lowerBound + " --> " + this.upperBound + "\n";
+		content += "\n\n*****HISTORY*****\n";
 		for (Action i : history) {
 			content += i.toString();
 		}

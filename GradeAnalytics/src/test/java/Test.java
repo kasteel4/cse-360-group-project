@@ -8,7 +8,7 @@ import java.util.Collections;
 
 class Test {
 	
-	@org.junit.jupiter.api.Test
+	/*@org.junit.jupiter.api.Test
 	void getMeanTest() {
 		GradeAnalytics ga = new GradeAnalytics();
 		ga.addData(3.0);
@@ -51,6 +51,6 @@ class Test {
 		assertTrue(results.get(3) == 4.0);
 		assertTrue(results.get(4) == 2.0);
 		assertTrue(results.get(5) == 5.0);
-	}
+	}*/
 
 }

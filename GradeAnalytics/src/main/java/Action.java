@@ -19,20 +19,19 @@ public class Action {
 	 * 7 :: Display Graphs
 	 */
 	private int actionType;
-	private LocalDateTime timestamp;
 	
 	/**
 	 * General constructor.
-	 * Sets timestamp to current data/time according
-	 * to user's systems
 	 */
 	public Action() {
-		timestamp = LocalDateTime.now();
 	}
 	
 	public Action(int type) {
-		timestamp = LocalDateTime.now();
-		actionType = type;
+		if (type >= 0 && type <= 7) {
+			actionType = type;
+		} else {
+			System.out.println("Invalid action type; cannot set private variable.");
+		}
 	}
 	
 	/**
@@ -62,31 +61,31 @@ public class Action {
 	 * of the action type.
 	 */
 	public String toString() {
-		String str = timestamp.toString();
+		String str = "";
 		switch (actionType) {
 		case 0:
-			str += " : Loaded File\n";
+			str += "--Loaded File\n";
 			break;
 		case 1:
-			str = " : Set Boundaries\n";
+			str = "--Set Boundaries\n";
 			break;
 		case 2:
-			str = " : Appended Data\n";
+			str = "--Appended Data\n";
 			break;
 		case 3:
-			str = " : Added Data Point\n";
+			str = "--Added Data Point\n";
 			break;
 		case 4:
-			str = " : Deleted Data Point\n";
+			str = "--Deleted Data Point\n";
 			break;
 		case 5:
-			str = " : Analysis run on data\n";
+			str = "--Analysis run on data\n";
 			break;
 		case 6:
-			str = " : Grade data displayed\n";
+			str = "--Grade data displayed\n";
 			break;
 		case 7:
-			str = " : Distribution graphs displayed\n";
+			str = "--Distribution graphs displayed\n";
 			break;
 		}
 		
