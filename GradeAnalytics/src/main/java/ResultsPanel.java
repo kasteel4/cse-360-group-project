@@ -189,7 +189,7 @@ public class ResultsPanel extends JPanel
 			}
 			for(int i = 0; i < errorList.size(); i++)
 			{
-				errorDisplay += errorList.get(i);
+				errorDisplay += errorList.get(i) + "\n";
 			}
 			errorLog.setText(errorDisplay);
 		}
