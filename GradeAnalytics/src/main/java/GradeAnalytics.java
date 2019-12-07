@@ -215,16 +215,31 @@ public class GradeAnalytics {
 		return data.size();
 	}
 	
+	/**
+	 * will find the maximum value of the current data
+	 * 
+	 * @return the maximum
+	 */
 	public double maxValue () {
 		
 		return Collections.max(data);
 	}
 	
+	/**
+	 * will find the minimum value of the current data
+	 * 
+	 * @return the minimum
+	 */
 	public double minValue () {
 		
 		return Collections.min(data);
 	}
 	
+	/**  Will find the mean of the current data.
+	 * 
+	 * 
+	 * @return the mean of the current data
+	 */
 	public double getMean ()
 	{
 		double total = 0;
@@ -236,6 +251,14 @@ public class GradeAnalytics {
 		return total / data.size();
 	}
 	
+	/**
+	 * Will find the mode of the current data.
+	 * 
+	 * If more than one value is found for the mode, 
+	 * all of them will be displayed
+	 * 
+	 * @return  mode of the current data
+	 */
 	public ArrayList <Double> getMode ()
 	{
 		// list of all the numbers with no duplicates
