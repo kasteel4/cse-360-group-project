@@ -431,14 +431,14 @@ public class GradeAnalytics {
 		String content = "";
 		content += "GradeAnalytics Report | " + LocalDateTime.now() + "\n\n";
 		content += "Size of data set: " + this.getSize() + "\n";
+		content += "Boundaries: " + this.lowerBound + " --> " + this.upperBound + "\n";
 		content += "Minimum/Maximum: " + this.minValue() + "/" + this.maxValue() + "\n";
 		content += "Mean: " + this.getMean() + "\n";
 		content += "Median: " + this.getMean() + "\n";
 		content += "Mode(s): ";
 		for (double val : this.getMode())
 			content += val + " ";
-		content += "Boundaries: " + this.lowerBound + " --> " + this.upperBound + "\n";
-		content += "\n\n*****HISTORY*****\n";
+		content += "\n\n\n*****HISTORY*****\n";
 		for (Action i : history) {
 			content += i.toString();
 		}
