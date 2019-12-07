@@ -231,6 +231,7 @@ public class GradeAnalytics {
 	public ArrayList<Double> analyzeData() {
 		ArrayList<Double> results = new ArrayList<Double>();
 		
+		results.add((double) data.size());
 		results.add(this.minValue());
 		results.add(this.maxValue());
 		results.add(this.getMean());
