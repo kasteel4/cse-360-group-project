@@ -77,6 +77,7 @@ public class ResultsPanel extends JPanel
 			{
 				//ArrayList from GA object
 				ArrayList<Double> data = ga.getData();
+				System.out.println(data);
 			}
 			//This is if display graphs is pressed
 			if(event.getSource() == displayGraphs)
@@ -84,6 +85,8 @@ public class ResultsPanel extends JPanel
 				/*
 				 * Get the data that I need for the graphs here
 				 */
+				ga.numEntriesGraphData();
+				ga.avgGraphData();
 			}
 			//This is if create reports is pressed
 			if(event.getSource() == createReport)

@@ -294,6 +294,54 @@ public class GradeAnalytics {
 	}
 	
 	/**
+	 * Finds the number of entries in each 10% interval of the boundary range
+	 * 
+	 * Number of elements at a given interval is stored in that index. For example,
+	 * for the default range of 0-100, the number of entries between 0 and 10 is
+	 * stored in index 0, 10-20 is stored in index 1, etc.
+	 * 
+	 * @return ArrayList with 10 elements
+	 */
+	public ArrayList<Integer> numEntriesGraphData() {
+		ArrayList<Integer> results = new ArrayList<Integer>();
+		
+		for (int i = 0; i <10; i++)
+			results.add(0);
+		
+		double boundaryInterval = (this.upperBound - this.lowerBound) / 10.0;
+		
+		for (double point : this.data) {
+			results.set((int)((point-this.lowerBound)/boundaryInterval), results.get((int)((point-this.lowerBound)/boundaryInterval))+1);
+		}
+		
+		return results;
+	}
+	
+	public ArrayList<Double> avgGraphData() {
+		ArrayList<Double> results = new ArrayList<Double>();
+		ArrayList<Integer> counts = new ArrayList<Integer>();
+		
+		for (int i = 0; i <10; i++) {
+			results.add(0.0);
+			counts.add(0);
+		}
+		
+		double boundaryInterval = (this.upperBound - this.lowerBound) / 10.0;
+		
+		for (double point : this.data) {
+			results.set((int)((point-this.lowerBound)/boundaryInterval), (int)((point-this.lowerBound)/boundaryInterval)+point);
+			counts.set((int)((point-this.lowerBound)/boundaryInterval), counts.get((int)((point-this.lowerBound)/boundaryInterval))+1);
+		}
+		
+		for (int i = 0; i < results.size(); i ++) {
+			if (counts.get(i) != 0)
+				results.set(i, results.get(i)/counts.get(i));
+		}
+		
+		return results;
+	}
+	
+	/**
 	 * Generates a txt report and saves it in the specified destination
 	 * 
 	 * @param filepath Destination to save txt file
@@ -330,6 +378,11 @@ public class GradeAnalytics {
 		content += "\nEND OF REPORT";
 		
 		return content;
+	}
+	
+	public void clearDataAndHistory() {
+		this.data = new ArrayList<Double>();
+		this.history = new ArrayList<Action>();
 	}
 	
 	private void sortData() {
