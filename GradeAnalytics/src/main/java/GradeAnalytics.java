@@ -291,6 +291,15 @@ public class GradeAnalytics {
 		return median;
 	}
 	
+	/**
+	 * Finds the number of entries in each 10% interval of the boundary range
+	 * 
+	 * Number of elements at a given interval is stored in that index. For example,
+	 * for the default range of 0-100, the number of entries between 0 and 10 is
+	 * stored in index 0, 10-20 is stored in index 1, etc.
+	 * 
+	 * @return ArrayList with 10 elements
+	 */
 	public ArrayList<Integer> numEntriesGraphData() {
 		ArrayList<Integer> results = new ArrayList<Integer>();
 		
@@ -298,13 +307,11 @@ public class GradeAnalytics {
 			results.add(0);
 		
 		double boundaryInterval = (this.upperBound - this.lowerBound) / 10.0;
-		System.out.println(this.lowerBound);
-		System.out.println(this.upperBound);
-		System.out.println(boundaryInterval);
+		
 		for (double point : this.data) {
 			results.set((int)((point-this.lowerBound)/boundaryInterval), results.get((int)((point-this.lowerBound)/boundaryInterval))+1);
 		}
-		System.out.println(results);
+		
 		return results;
 	}
 	
