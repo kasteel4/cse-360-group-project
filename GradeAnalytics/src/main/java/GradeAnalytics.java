@@ -143,7 +143,9 @@ public class GradeAnalytics {
 	 * @throws InvalidBoundaries
 	 */
 	public void setBoundaries(double upper, double lower) 
-	throws InvalidBoundaries {
+	throws InvalidBoundaries, DataOutOfBounds {
+		
+		int dataOutOfBoundsCount = 0;
 		
 		if (upper < lower)
 			throw new InvalidBoundaries("Upper bound must be higher than lower bound");
@@ -157,14 +159,14 @@ public class GradeAnalytics {
 		//removes data that became out of bounds due to changing boundaries
 		double curr;
 		for(int i = data.size() - 1; i >= 0; i--) {
-			try {
-				curr = data.get(i);
-			if(!isWithinBoundaries(curr)) {
+			
+			if(!isWithinBoundaries(data.get(i))) {
 				data.remove(i);
-				throw new DataOutOfBounds(curr + " is no longer within the boundaries.");
+				dataOutOfBoundsCount++;
 			}
-			} catch(DataOutOfBounds e) {}
 		}
+		if (dataOutOfBoundsCount > 0)
+			throw new DataOutOfBounds(dataOutOfBoundsCount + " data points were removed due to it being outside of the new bounds.");
 		
 		history.add(new Action(1));
 	}

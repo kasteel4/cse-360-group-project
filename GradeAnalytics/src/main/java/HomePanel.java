@@ -146,6 +146,12 @@ public class HomePanel extends JPanel
 							errorLabel.setText(exception.getMessage());
 							errorLabel.setForeground(Color.red);
 						}
+						catch(DataOutOfBounds exception)
+						{
+							errorList.add(exception.getMessage());
+							errorLabel.setText("Boundaries Set. Some data removed.");
+							errorLabel.setForeground(Color.green);
+						}
 					}
 				}
 				while(value != JOptionPane.CANCEL_OPTION);
