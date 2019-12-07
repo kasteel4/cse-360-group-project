@@ -73,15 +73,15 @@ public class ResultsPanel extends JPanel
 			//This is if analyze is pressed
 			if(event.getSource() == analyze)
 			{
-				int numEntries = 0;
-				double high = 0, low = 0, mean = 0, median = 0;
+				double numEntries = 0, high = 0, low = 0, mean = 0, median = 0;
 				String modes = "";
 				ArrayList<Double> results = ga.analyzeData();
-				low = results.get(0);
-				high = results.get(1);
-				mean = Math.round(results.get(2) * 10.0)/10.0;
-				median = results.get(3);
-				for(int i = 4; i < results.size(); i++)
+				numEntries = results.get(0);
+				low = results.get(1);
+				high = results.get(2);
+				mean = Math.round(results.get(3) * 10.0)/10.0;
+				median = results.get(4);
+				for(int i = 5; i < results.size(); i++)
 				{
 					modes += results.get(i) + ", ";
 				}
