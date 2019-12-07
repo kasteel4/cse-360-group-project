@@ -13,7 +13,8 @@ import java.util.*;
 
 public class EditPanel extends JPanel
 {
-	private JList<String> errorLog;
+	private JTextArea errorLog;
+	private ArrayList<String> errorList;
 	private JButton appendData, addData, deleteData;
 	private JScrollPane errors;
 	private ResultsPanel resultPanel;
@@ -31,7 +32,8 @@ public class EditPanel extends JPanel
 		
 		JLabel errorHeader, placeholder1, placeholder2, placeholder3, placeholder4,
 		placeholder5, placeholder6;
-		errorLog = new JList<String>();
+		errorLog = new JTextArea();
+		errorList = new ArrayList<String>();
 		errors = new JScrollPane(errorLog);
 		
 		appendData = new JButton("Append Data");
@@ -83,15 +85,21 @@ public class EditPanel extends JPanel
 				{
 					//Here is the selected file from which data should be appended
 					String fileName = fs.getSelectedFile().getPath();
-					try {
+					try 
+					{
 						ga.parseFile(fileName);
-					} catch (InvalidFileTypeException e) {
-						//*****Should be added to error console instead of sys out
-						System.out.println(e.getMessage());
-					} catch (DataOutOfBounds e) {
-						System.out.println(e.getMessage());
-					} catch (InvalidDataValue e) {
-						System.out.println(e.getMessage());
+					} 
+					catch (InvalidFileTypeException e) 
+					{
+						errorList.add(e.getMessage());
+					}
+					catch (DataOutOfBounds e) 
+					{
+						errorList.add(e.getMessage());
+					}
+					catch (InvalidDataValue e) 
+					{
+						errorList.add(e.getMessage());
 					}
 					
 				}
@@ -121,13 +129,14 @@ public class EditPanel extends JPanel
 							numAdd = Double.parseDouble(field1.getText());
 							ga.addData(numAdd);
 							field1.setText("");
-							errorLabel.setText("Value Added");
+							errorLabel.setText("Value Added. Cancel or Add another value.");
 							errorLabel.setForeground(Color.green);
 						}
 						catch(NumberFormatException exception)
 						{
 							//Here is an error if they do not enter a number
-							errorLabel.setText("Invalid Entry");
+							errorList.add("Invalid Value Entered for adding\n");
+							errorLabel.setText("Invalid Entry.  Cancel or enter valid value.");
 							errorLabel.setForeground(Color.red);
 						}
 					}
@@ -157,31 +166,33 @@ public class EditPanel extends JPanel
 						{
 							//Here is the value to delete from data set
 							numDelete = Double.parseDouble(field1.getText());
-							/*
-							 * Enter code here
-							 * Search for value
-							 * If it exists delete if not add to error list
-							 */
 							ga.deleteData(numDelete);
 							
 							field1.setText("");
-							errorLabel.setText("Value Deleted");
+							errorLabel.setText("Value Deleted. Cancel or delete another value");
 							errorLabel.setForeground(Color.green);
 						}
 						catch(NumberFormatException exception)
 						{
-							errorLabel.setText("Invalid Entry");
+							errorList.add(exception.getMessage());
+							errorLabel.setText("Invalid Entry.  Cancel or enter valid value.");
 							errorLabel.setForeground(Color.red);
 						}
 						catch(DataNotFound exception)
 						{
 							errorLabel.setText(exception.getMessage());
 							errorLabel.setForeground(Color.red);
+							errorList.add(exception.getMessage());
 						}
 					}
 				}
 				while(value != JOptionPane.CANCEL_OPTION);
 			}
+			for(int i = 0; i < errorList.size(); i++)
+			{
+				errorDisplay += errorList.get(i);
+			}
+			errorLog.setText(errorDisplay);
 		}
 	}
 }

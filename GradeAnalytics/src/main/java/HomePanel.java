@@ -10,7 +10,8 @@ import java.io.*;
 
 public class HomePanel extends JPanel
 {
-	private JList<String> errorLog;
+	private JTextArea errorLog;
+	private ArrayList<String> errorList;
 	private JButton loadFile, setBoundaries;
 	private JScrollPane errors;
 	private ResultsPanel resultPanel;
@@ -29,7 +30,8 @@ public class HomePanel extends JPanel
 		ga = gaParam;
 		
 		JLabel errorHeader, placeholder1, placeholder2, placeholder3, placeholder4;
-		errorLog = new JList<String>();
+		errorLog = new JTextArea();
+		errorList = new ArrayList<String>();
 		errors = new JScrollPane(errorLog);
 		
 		loadFile = new JButton("Load File");
@@ -81,13 +83,18 @@ public class HomePanel extends JPanel
 						ga.clearDataAndHistory();
 						ga.parseFile(fileName);
 						
-					} catch (InvalidFileTypeException e) {
-						//*****Should be added to error console instead of sys out
-						System.out.println(e.getMessage());
-					} catch (DataOutOfBounds e) {
-						System.out.println(e.getMessage());
-					} catch (InvalidDataValue e) {
-						System.out.println(e.getMessage());
+					} 
+					catch (InvalidFileTypeException e)
+					{
+						errorList.add(e.getMessage());
+					} 
+					catch (DataOutOfBounds e) 
+					{
+						errorList.add(e.getMessage());
+					} 
+					catch (InvalidDataValue e) 
+					{
+						errorList.add(e.getMessage());
 					}
 					
 				}
@@ -128,11 +135,13 @@ public class HomePanel extends JPanel
 						}
 						catch(NumberFormatException exception)
 						{
-							errorLabel.setText("Invalid Number");
-							errorLabel.setForeground(Color.red);
+							errorList.add(exception.getMessage());
+							errorLabel.setText("Invalid Value. Cancel or enter valid value.");
+							errorLabel.setForeground(Color.red)
 						}
 						catch(InvalidBoundaries exception)
 						{
+							errorList.add(exception.getMessage());
 							errorLabel.setText(exception.getMessage());
 							errorLabel.setForeground(Color.red);
 						}
@@ -140,6 +149,11 @@ public class HomePanel extends JPanel
 				}
 				while(value != JOptionPane.CANCEL_OPTION);
 			}
+			for(int i = 0; i < errorList.size(); i++)
+			{
+				errorDisplay += errorList.get(i);
+			}
+			errorLog.setText(errorDisplay);
 		}
 	}
 }
